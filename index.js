@@ -83,4 +83,5 @@ function done(id){
         donex[0].isDone = false;
         d.classList.remove('done');
     }
+    console.log('hi');
 }
