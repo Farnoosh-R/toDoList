@@ -7,13 +7,23 @@ let elOutputList3 = document.getElementById("outputList3");
 let elOutputList4 = document.getElementById("outputList4");
 
 let arrayList = [];
-
+const arrayPriList = ['high', 'middle', 'low'];
 
 function getCat(){
     let catEl = document.getElementById("cat");
     let catElText = 
     catEl.options[catEl.selectedIndex].text;
     return catElText;
+}
+function getPeriority(){
+    let perEl = document.getElementById("periority");
+    let perElText = 
+    perEl.options[perEl.selectedIndex].value;
+    return perElText;
+}
+function getPrintPriTitle(priValue){
+    return arrayPriList[priValue - 1];
+    
 }
 
 function toDoList(){
@@ -25,6 +35,8 @@ function toDoList(){
     elDiv.setAttribute('id', `div_${id}`);
     let elCat = document.createElement('label');
     elCat.setAttribute('id', `cat_${id}`);
+    let elPer = document.createElement('label');
+    elPer.setAttribute('id', `per_${id}`);
     let elLabel = document.createElement('label');
     elLabel.setAttribute('id', `label_${id}`);
     elLabel.setAttribute('for', `checkbox_${id}`);
@@ -38,12 +50,11 @@ function toDoList(){
     checkBox.classList.add('checkbox');
     checkBox.addEventListener('change', ()=> done(id));
       
-    
 
     arrayList.push({
         title: elList.value,
         cat: getCat(),
-        priority: 0,
+        priority: getPeriority(),
         index: 0,
         isDone: false,
         trash : false,
@@ -53,9 +64,11 @@ function toDoList(){
     
     elLabel.innerHTML  = elList.value;
     elCat.innerHTML = getCat();
+    elPer.innerHTML = getPrintPriTitle(getPeriority());
     elDiv.appendChild(checkBox);
     elDiv.appendChild(elCat);
     elDiv.appendChild(elLabel);
+    elDiv.appendChild(elPer);
     elDiv.appendChild(i);
     elOutputList.appendChild(elDiv);
     if (getCat() == 'خرید'){
@@ -66,6 +79,15 @@ function toDoList(){
         elOutputList3.appendChild(elOutputList);
     }else if (getCat() == 'برنامه در صف اجرا'){
         elOutputList4.appendChild(elOutputList);
+    }
+
+    if (getPeriority() == '1'){
+
+        elPer.classList.add('per-h');
+    }else if(getPeriority() == '2'){
+        elPer.classList.add('per-m');
+    }else if(getPeriority() == '3'){
+        elPer.classList.add('per-l');
     }
     
     elList.value = '';

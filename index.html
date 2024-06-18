@@ -18,21 +18,30 @@
         <option value="visit">وقت</option>
         <option value="pans">برنامه در صف اجرا</option>
       </select>
+      <select name="periority" id="periority" onchange="getPeriority()">
+        <option value="1">اولویت بالا</option>
+        <option value="2">اولویت متوسط</option>
+        <option value="3">اولویت پایین</option>
+      </select>
     <button id="btn" class="btn btn-primary">اضافه بشه به لیست</button>
 <div id="outputListBox">
-    <span class="text-primary list-title">To Do List</span>
-  <div class="row">
+    <span class="text-primary list-title mb-4">To Do List</span>
+  <div class="row justify-content-center">
     
-    <div class="col-md-3">
+    <div class="col-md-3 border-l">
+        <span class="cat-title d-block text-center">خرید</span>
         <div id="outputList1"></div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 border-l">
+        <span class="cat-title d-block text-center">پزشکی</span>
         <div id="outputList2"></div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 border-l">
+        <span class="cat-title d-block text-center">وقت ها</span>
         <div id="outputList3"></div>
     </div>
     <div class="col-md-3">
+        <span class="cat-title d-block text-center">برنامه در صف اجرا</span>
         <div id="outputList4"></div>
     </div>
   </div>
