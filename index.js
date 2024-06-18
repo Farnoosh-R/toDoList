@@ -37,7 +37,7 @@ function toDoList(){
     checkBox.setAttribute('id', `checkbox_${id}`);
     checkBox.classList.add('checkbox');
     checkBox.addEventListener('change', ()=> done(id));
-    
+      
     
 
     arrayList.push({
