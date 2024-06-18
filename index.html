@@ -10,7 +10,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="toDoListArea">
+    <div class="toDoListArea container text-center">
     <input id="list" class="form-control list w-50 d-inline-block mb-4" type="text"/>
     <select name="catList" id="cat" onchange="getCat()">
         <option value="shop">خرید</option>
@@ -21,7 +21,21 @@
     <button id="btn" class="btn btn-primary">اضافه بشه به لیست</button>
 <div id="outputListBox">
     <span class="text-primary list-title">To Do List</span>
-    <div id="outputList"></div>
+  <div class="row">
+    
+    <div class="col-md-3">
+        <div id="outputList1"></div>
+    </div>
+    <div class="col-md-3">
+        <div id="outputList2"></div>
+    </div>
+    <div class="col-md-3">
+        <div id="outputList3"></div>
+    </div>
+    <div class="col-md-3">
+        <div id="outputList4"></div>
+    </div>
+  </div>
     
 </div>
 

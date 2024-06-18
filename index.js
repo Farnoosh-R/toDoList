@@ -1,6 +1,10 @@
 document.getElementById("btn").addEventListener("click", toDoList);
 let elList = document.getElementById("list");
-let elOutputList = document.getElementById("outputList");
+
+let elOutputList1 = document.getElementById("outputList1");
+let elOutputList2 = document.getElementById("outputList2");
+let elOutputList3 = document.getElementById("outputList3");
+let elOutputList4 = document.getElementById("outputList4");
 
 let arrayList = [];
 
@@ -15,7 +19,8 @@ function getCat(){
 function toDoList(){
     let id = uuid();
  
-
+    let elOutputList = document.createElement('div');
+    elOutputList.setAttribute('id', `divoutput_${id}`);
     let elDiv = document.createElement('div');
     elDiv.setAttribute('id', `div_${id}`);
     let elCat = document.createElement('label');
@@ -53,6 +58,16 @@ function toDoList(){
     elDiv.appendChild(elLabel);
     elDiv.appendChild(i);
     elOutputList.appendChild(elDiv);
+    if (getCat() == 'خرید'){
+        elOutputList1.appendChild(elOutputList);
+    } else if (getCat() == 'پزشکی'){
+        elOutputList2.appendChild(elOutputList);
+    }else if (getCat() == 'وقت'){
+        elOutputList3.appendChild(elOutputList);
+    }else if (getCat() == 'برنامه در صف اجرا'){
+        elOutputList4.appendChild(elOutputList);
+    }
+    
     elList.value = '';
 
 }
@@ -64,10 +79,13 @@ function uuid() {
 }
 
 function trash(id){
+    let e = document.getElementById(`divoutput_${id}`);
     let t = document.getElementById(`div_${id}`);
+    
     let trashx = arrayList.filter(c => c.id === id)
     trashx[0].trash = true;
-    elOutputList.removeChild(t);
+    e.removeChild(t);
+    
 }
 function done(id){
     let d = document.getElementById(`div_${id}`);
@@ -83,5 +101,4 @@ function done(id){
         donex[0].isDone = false;
         d.classList.remove('done');
     }
-    console.log('hi');
 }
