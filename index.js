@@ -9,6 +9,13 @@ let elOutputList4 = document.getElementById("outputList4");
 let arrayList = [];
 const arrayPriList = ['high', 'middle', 'low'];
 
+
+// window.onload = function saveData() {
+   
+//     localStorage.setItem("toDoList", JSON.stringify(arrayList));
+//     alert( localStorage.getItem('toDoList') );
+//   };
+
 function getCat(){
     let catEl = document.getElementById("cat");
     let catElText = 
@@ -23,6 +30,11 @@ function getPeriority(){
 }
 function getPrintPriTitle(priValue){
     return arrayPriList[priValue - 1];
+    
+}
+
+function sortObjectsByBoolean(arr) {
+    arr.sort((a, b) => a.isDone - b.isDone);
     
 }
 
@@ -110,6 +122,7 @@ function trash(id){
     
 }
 function done(id){
+    let e = document.getElementById(`divoutput_${id}`);
     let d = document.getElementById(`div_${id}`);
     let c = document.getElementById(`checkbox_${id}`);
     let donex = arrayList.filter(c => c.id === id)
@@ -117,10 +130,15 @@ function done(id){
     if (c.checked){
         donex[0].isDone = true;
         d.classList.add('done');
-
-        
+       
     }else{
         donex[0].isDone = false;
         d.classList.remove('done');
     }
+    sortObjectsByBoolean(arrayList);
+
+    //e.innerHTML = "";
+    
 }
+
+
