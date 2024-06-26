@@ -10,6 +10,8 @@ let arrayList = [];
 const arrayPriList = ['high', 'middle', 'low'];
 
 
+
+
 // window.onload = function saveData() {
    
 //     localStorage.setItem("toDoList", JSON.stringify(arrayList));
@@ -30,11 +32,6 @@ function getPeriority(){
 }
 function getPrintPriTitle(priValue){
     return arrayPriList[priValue - 1];
-    
-}
-
-function sortObjectsByBoolean(arr) {
-    arr.sort((a, b) => a.isDone - b.isDone);
     
 }
 
@@ -121,6 +118,30 @@ function trash(id){
     e.removeChild(t);
     
 }
+
+function sortObjectsByBoolean(arr) {
+    return arr.sort((a, b) => a.isDone - b.isDone);
+}
+function clearElements(){
+    elOutputList1.replaceChildren();
+    elOutputList2.replaceChildren();
+    elOutputList3.replaceChildren();
+    elOutputList4.replaceChildren();
+}
+
+function addSortElement(){
+    
+    let sortarray = sortObjectsByBoolean(arrayList);
+    //console.log(sortarray);
+    sortarray.forEach(item => {
+        elOutputList1.innerHTM += `<ul>
+            <li>${item.title}</li>
+            <li>${item.cat}</li>
+        </ul>`
+    });
+    
+}
+
 function done(id){
     let e = document.getElementById(`divoutput_${id}`);
     let d = document.getElementById(`div_${id}`);
@@ -136,9 +157,10 @@ function done(id){
         d.classList.remove('done');
     }
     sortObjectsByBoolean(arrayList);
+    clearElements();
+    addSortElement();
 
-    //e.innerHTML = "";
-    
+
 }
 
 
