@@ -7,160 +7,177 @@ let elOutputList3 = document.getElementById("outputList3");
 let elOutputList4 = document.getElementById("outputList4");
 
 let arrayList = [];
-const arrayPriList = ['high', 'middle', 'low'];
-
-
-
+const arrayPriList = ["high", "middle", "low"];
 
 // window.onload = function saveData() {
-   
+
 //     localStorage.setItem("toDoList", JSON.stringify(arrayList));
 //     alert( localStorage.getItem('toDoList') );
 //   };
 
-function getCat(){
-    let catEl = document.getElementById("cat");
-    let catElText = 
-    catEl.options[catEl.selectedIndex].text;
-    return catElText;
-}
-function getPeriority(){
-    let perEl = document.getElementById("periority");
-    let perElText = 
-    perEl.options[perEl.selectedIndex].value;
-    return perElText;
-}
-function getPrintPriTitle(priValue){
-    return arrayPriList[priValue - 1];
-    
+function getCat() {
+  let catEl = document.getElementById("cat");
+  let catElText = catEl.options[catEl.selectedIndex].text;
+  return catElText;
 }
 
-function toDoList(){
-    let id = uuid();
- 
-    let elOutputList = document.createElement('div');
-    elOutputList.setAttribute('id', `divoutput_${id}`);
-    let elDiv = document.createElement('div');
-    elDiv.setAttribute('id', `div_${id}`);
-    let elCat = document.createElement('label');
-    elCat.setAttribute('id', `cat_${id}`);
-    let elPer = document.createElement('label');
-    elPer.setAttribute('id', `per_${id}`);
-    let elLabel = document.createElement('label');
-    elLabel.setAttribute('id', `label_${id}`);
-    elLabel.setAttribute('for', `checkbox_${id}`);
-    elLabel.classList.add('labelItem');
-    let i = document.createElement('i');
-    i.classList.add("fa", "fa-trash-o");
-    i.addEventListener('click', ()=> trash(id));
-    let checkBox = document.createElement('input');
-    checkBox.setAttribute('type', 'checkbox');
-    checkBox.setAttribute('id', `checkbox_${id}`);
-    checkBox.classList.add('checkbox');
-    checkBox.addEventListener('change', ()=> done(id));
-      
+function getCatId() {
+  let catEl = document.getElementById("cat");
+  let catElValue = catEl.options[catEl.selectedIndex].value;
+  return catElValue;
+}
 
-    arrayList.push({
-        title: elList.value,
-        cat: getCat(),
-        priority: getPeriority(),
-        index: 0,
-        isDone: false,
-        trash : false,
-        id: id
-    });
+function getPeriority() {
+  let perEl = document.getElementById("periority");
+  let perElText = perEl.options[perEl.selectedIndex].value;
+  return perElText;
+}
+function getPrintPriTitle(priValue) {
+  return arrayPriList[priValue - 1];
+}
+
+function sortObjectsByBoolean() {
+  arrayList.sort((a, b) => a.isDone - b.isDone);
+}
+
+function createTask(id) {
+  var item = arrayList.filter((p) => p.id == id)[0];
+
+  let elOutputList = document.createElement("div");
+  elOutputList.setAttribute("id", `divoutput_${id}`);
+  let elDiv = document.createElement("div");
+  elDiv.setAttribute("id", `div_${id}`);
+  let elCat = document.createElement("label");
+  elCat.setAttribute("id", `cat_${id}`);
+  let elPer = document.createElement("label");
+  elPer.setAttribute("id", `per_${id}`);
+  let elLabel = document.createElement("label");
+  elLabel.setAttribute("id", `label_${id}`);
+  elLabel.setAttribute("for", `checkbox_${id}`);
+  elLabel.classList.add("labelItem");
+  let i = document.createElement("i");
+  i.classList.add("fa", "fa-trash-o");
+  i.addEventListener("click", () => trash(id));
+  let checkBox = document.createElement("input");
+  checkBox.setAttribute("type", "checkbox");
+  checkBox.setAttribute("id", `checkbox_${id}`);
+  checkBox.classList.add("checkbox");
+  checkBox.addEventListener("change", () => done(id));
+
+  if (item.isDone) {
+    elDiv.classList.add("done");
+    checkBox.checked = true;
+  }
+
+  elLabel.innerHTML = item.title;
+  elCat.innerHTML = item.cat;
+  elPer.innerHTML = getPrintPriTitle(item.priority);
+  elDiv.appendChild(checkBox);
+  elDiv.appendChild(elCat);
+  elDiv.appendChild(elLabel);
+  elDiv.appendChild(elPer);
+  elDiv.appendChild(i);
+  elOutputList.appendChild(elDiv);
+
+  if (getPeriority() == "1") {
+    elPer.classList.add("per-h");
+  } else if (getPeriority() == "2") {
+    elPer.classList.add("per-m");
+  } else if (getPeriority() == "3") {
+    elPer.classList.add("per-l");
+  }
+
+  return elOutputList;
+}
+function toDoList() {
+  let id = uuid();
+
+  arrayList.push({
+    title: elList.value,
+    cat: getCat(),
+    catId: getCatId(),
+    priority: getPeriority(),
+    index: 0,
+    isDone: false,
+    trash: false,
+    id: id,
+  });
+
+  if (arrayList.priority == "1") {
+    elPer.classList.add("per-h");
+  } else if (arrayList.priority == "2") {
+    elPer.classList.add("per-m");
+  } else if (arrayList.priority == "3") {
+    elPer.classList.add("per-l");
+  }
+
+  displayItems();
+
   
-    
-    elLabel.innerHTML  = elList.value;
-    elCat.innerHTML = getCat();
-    elPer.innerHTML = getPrintPriTitle(getPeriority());
-    elDiv.appendChild(checkBox);
-    elDiv.appendChild(elCat);
-    elDiv.appendChild(elLabel);
-    elDiv.appendChild(elPer);
-    elDiv.appendChild(i);
-    elOutputList.appendChild(elDiv);
-    if (getCat() == 'خرید'){
-        elOutputList1.appendChild(elOutputList);
-    } else if (getCat() == 'پزشکی'){
-        elOutputList2.appendChild(elOutputList);
-    }else if (getCat() == 'وقت'){
-        elOutputList3.appendChild(elOutputList);
-    }else if (getCat() == 'برنامه در صف اجرا'){
-        elOutputList4.appendChild(elOutputList);
-    }
 
-    if (getPeriority() == '1'){
-
-        elPer.classList.add('per-h');
-    }else if(getPeriority() == '2'){
-        elPer.classList.add('per-m');
-    }else if(getPeriority() == '3'){
-        elPer.classList.add('per-l');
-    }
-    
-    elList.value = '';
-
+  elList.value = "";
 }
 function uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-    });
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
-function trash(id){
-    let e = document.getElementById(`divoutput_${id}`);
-    let t = document.getElementById(`div_${id}`);
-    
-    let trashx = arrayList.filter(c => c.id === id)
-    trashx[0].trash = true;
-    e.removeChild(t);
-    
+function trash(id) {
+  let e = document.getElementById(`divoutput_${id}`);
+  let t = document.getElementById(`div_${id}`);
+
+  let trashx = arrayList.filter((c) => c.id === id);
+  trashx[0].trash = true;
+  e.removeChild(t);
+}
+function done(id) {
+  let d = document.getElementById(`div_${id}`);
+  let c = document.getElementById(`checkbox_${id}`);
+  let donex = arrayList.filter((c) => c.id === id);
+
+  if (c.checked) {
+    donex[0].isDone = true;
+    d.classList.add("done");
+  } else {
+    donex[0].isDone = false;
+    d.classList.remove("done");
+  }
+
+  displayItems();
 }
 
-function sortObjectsByBoolean(arr) {
-    return arr.sort((a, b) => a.isDone - b.isDone);
-}
-function clearElements(){
-    elOutputList1.replaceChildren();
-    elOutputList2.replaceChildren();
-    elOutputList3.replaceChildren();
-    elOutputList4.replaceChildren();
+function displayItems() {
+  clearAll();
+  sortObjectsByBoolean();
+  AddItemToPage();
 }
 
-function addSortElement(){
-    
-    let sortarray = sortObjectsByBoolean(arrayList);
-    //console.log(sortarray);
-    sortarray.forEach(item => {
-        elOutputList1.innerHTM += `<ul>
-            <li>${item.title}</li>
-            <li>${item.cat}</li>
-        </ul>`
-    });
-    
+function clearAll() {
+  document.getElementById("outputList1").innerHTML = "";
+  document.getElementById("outputList2").innerHTML = "";
+  document.getElementById("outputList3").innerHTML = "";
+  document.getElementById("outputList4").innerHTML = "";
 }
 
-function done(id){
-    let e = document.getElementById(`divoutput_${id}`);
-    let d = document.getElementById(`div_${id}`);
-    let c = document.getElementById(`checkbox_${id}`);
-    let donex = arrayList.filter(c => c.id === id)
-
-    if (c.checked){
-        donex[0].isDone = true;
-        d.classList.add('done');
-       
-    }else{
-        donex[0].isDone = false;
-        d.classList.remove('done');
+function AddItemToPage() {
+  arrayList.forEach((item, index) => {
+    var elOutputList = createTask(item.id);
+    var outputList = document.getElementById(item.catId);
+    let a = document.getElementById("outputList1");
+    let b = document.getElementById("outputList2");
+    let c = document.getElementById("outputList3");
+    let d = document.getElementById("outputList4");
+    if (item.catId === 'shop'){
+      a.appendChild(elOutputList);
+    } else if (item.catId === 'doctor'){
+      b.appendChild(elOutputList);
+    } else if (item.catId === 'visit'){
+      c.appendChild(elOutputList);
+    } else if (item.catId === 'pans'){
+      d.appendChild(elOutputList);
     }
-    sortObjectsByBoolean(arrayList);
-    clearElements();
-    addSortElement();
-
-
+  });
 }
-
-
