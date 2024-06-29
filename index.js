@@ -113,8 +113,6 @@ function toDoList() {
 
   displayItems();
 
-  
-
   elList.value = "";
 }
 function uuid() {
@@ -156,28 +154,15 @@ function displayItems() {
 }
 
 function clearAll() {
-  document.getElementById("outputList1").innerHTML = "";
-  document.getElementById("outputList2").innerHTML = "";
-  document.getElementById("outputList3").innerHTML = "";
-  document.getElementById("outputList4").innerHTML = "";
+  for (var i = 1; i <= 4; i++) {
+    document.getElementById(`outputList${i}`).innerHTML = "";
+  }
 }
 
 function AddItemToPage() {
   arrayList.forEach((item, index) => {
     var elOutputList = createTask(item.id);
-    var outputList = document.getElementById(item.catId);
-    let a = document.getElementById("outputList1");
-    let b = document.getElementById("outputList2");
-    let c = document.getElementById("outputList3");
-    let d = document.getElementById("outputList4");
-    if (item.catId === 'shop'){
-      a.appendChild(elOutputList);
-    } else if (item.catId === 'doctor'){
-      b.appendChild(elOutputList);
-    } else if (item.catId === 'visit'){
-      c.appendChild(elOutputList);
-    } else if (item.catId === 'pans'){
-      d.appendChild(elOutputList);
-    }
+    var outputList = document.getElementById("outputList" + item.catId);
+    outputList.appendChild(elOutputList);
   });
 }
