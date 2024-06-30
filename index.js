@@ -9,12 +9,11 @@ let elOutputList4 = document.getElementById("outputList4");
 let arrayList = [];
 const arrayPriList = ["high", "middle", "low"];
 
-// window.onload = function saveData() {
-
-//     localStorage.setItem("toDoList", JSON.stringify(arrayList));
-//     alert( localStorage.getItem('toDoList') );
-//   };
-
+window.onload = function saveData() {
+  var retrievedObject = localStorage.getItem('testObject');
+  console.log('retrievedObject: ', JSON.parse(retrievedObject));
+ 
+  }
 function getCat() {
   let catEl = document.getElementById("cat");
   let catElText = catEl.options[catEl.selectedIndex].text;
@@ -36,8 +35,11 @@ function getPrintPriTitle(priValue) {
   return arrayPriList[priValue - 1];
 }
 
+
 function sortObjectsByBoolean() {
   arrayList.sort((a, b) => a.isDone - b.isDone);
+  let testObject = arrayList;
+  localStorage.setItem('testObject', JSON.stringify(testObject));
 }
 
 function createTask(id) {
@@ -103,16 +105,7 @@ function toDoList() {
     id: id,
   });
 
-  if (arrayList.priority == "1") {
-    elPer.classList.add("per-h");
-  } else if (arrayList.priority == "2") {
-    elPer.classList.add("per-m");
-  } else if (arrayList.priority == "3") {
-    elPer.classList.add("per-l");
-  }
-
   displayItems();
-
   elList.value = "";
 }
 function uuid() {
