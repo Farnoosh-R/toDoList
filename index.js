@@ -9,10 +9,11 @@ let elOutputList4 = document.getElementById("outputList4");
 let arrayList = [];
 const arrayPriList = ["high", "middle", "low"];
 
-window.onload = function saveData() {
+window.onload = () => {
   var retrievedObject = localStorage.getItem('testObject');
-  console.log('retrievedObject: ', JSON.parse(retrievedObject));
- 
+  //console.log('retrievedObject: ', JSON.parse(retrievedObject));
+ arrayList = JSON.parse(retrievedObject);
+ displayItems();
   }
 function getCat() {
   let catEl = document.getElementById("cat");
@@ -38,10 +39,12 @@ function getPrintPriTitle(priValue) {
 
 function sortObjectsByBoolean() {
   arrayList.sort((a, b) => a.isDone - b.isDone);
-  let testObject = arrayList;
-  localStorage.setItem('testObject', JSON.stringify(testObject));
+  
 }
-
+function saveData() {
+  console.log('saving data');
+  localStorage.setItem('testObject', JSON.stringify(arrayList));
+}
 function createTask(id) {
   var item = arrayList.filter((p) => p.id == id)[0];
 
@@ -81,11 +84,11 @@ function createTask(id) {
   elDiv.appendChild(i);
   elOutputList.appendChild(elDiv);
 
-  if (getPeriority() == "1") {
+  if (item.priority == "1") {
     elPer.classList.add("per-h");
-  } else if (getPeriority() == "2") {
+  } else if (item.priority == "2") {
     elPer.classList.add("per-m");
-  } else if (getPeriority() == "3") {
+  } else if (item.priority == "3") {
     elPer.classList.add("per-l");
   }
 
@@ -144,6 +147,7 @@ function displayItems() {
   clearAll();
   sortObjectsByBoolean();
   AddItemToPage();
+  saveData();
 }
 
 function clearAll() {
